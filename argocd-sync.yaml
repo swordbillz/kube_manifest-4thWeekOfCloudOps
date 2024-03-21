@@ -1,24 +1,39 @@
+## argoCD를 사용하여 Kubernetes 클러스터에 애플리케이션을 배포하기 위한 리소스 정의
+
+# apiVersion 및 kind는 애플리케이션을 정의하는 리소스
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
+# metadata : 위 애플리케이션의 메타 데이터를 정의, 여기는 애플리케이션의 이름과 네임스페이스를 지정
 metadata:
   name: todo-app-argo
   namespace: argocd
+
+# spec : 애플리케이션의 구성을 정의, project는 애플리케이션이 속하는 argoCD 프로젝트를 지정
 spec:
   project: default
 
+# source : 애플리케이션의 소스 코드가 위치한 Git 리포리토리 정보를 정의
+# 리포지토리의 URL 및 브랜치의 HEAD를 의미
   source:
-    repoURL: https://github.com/AnkitJodhani/kube_manifest-4thWeekOfCloudOps.git
+    repoURL: https://github.com/ng2cc/kube_manifest-4thWeekOfCloudOps.git
     targetRevision: HEAD
     path: menifest
+  
+# destination : 애플리케이션을 배포할 대상 Kubernetes 클러스터와 네임스페이스를 지정
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp
 
+# syncPolicy : 애플리케이션의 동기화 정책 설정, 네임스페이스를 생성하는 옵션이 포함
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
 
+# automated : 자동화된 동기화 정책을 설정
+# selfHeal : Argo CD는 배포된 애플리케이션의 상태를 주기적으로 모니터링하고, 상태가 변경된 경우에 자동으로 해당 상태를 복구
+# prune : Argo CD는 Git 리포지토리의 변경 사항에 따라 필요하지 않은 리소스를 클러스터에서 자동으로 제거합니다. 
+# 예를 들어, Git 리포지토리에서 특정 리소스를 삭제했을 때, 해당 리소스를 클러스터에서도 삭제함으로써 리소스의 일치성을 유지
     automated:
       selfHeal: true
       prune: true
-
