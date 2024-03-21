@@ -1,12 +1,15 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: myapp-service
-spec:
-  selector:
+# Kubernetes의 Service 오브젝트를 정의
+# Service는 일련의 Pod들에 대한 단일 진입점을 만들어내는 Kubernetes 리소스
+
+apiVersion: v1 # 이 Service 오브젝트는 Kubernetes의 v1 API 버전을 사용
+kind: Service # 이 오브젝트의 종류는 Service
+metadata: # Service의 메타데이터를 정의
+  name: myapp-service # Service의 이름은 "myapp-service"
+spec: # Service의 구성을 정의
+  selector: # 이 Service에 의해 라우팅되는 Pod를 선택하기 위한 라벨 셀렉터
     app: myapp
 
-  type: LoadBalancer
+  type: LoadBalancer # Service의 유형을 정의합니다. LoadBalancer 유형은 클라우드 제공업체의 로드 밸런서를 사용하여 외부 트래픽을 분산
   ports:
   - port: 80
     protocol: TCP

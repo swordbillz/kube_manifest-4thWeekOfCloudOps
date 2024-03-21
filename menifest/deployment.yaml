@@ -1,19 +1,22 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
+# Kubernetes의 Deployment 오브젝트를 정의
+# Deployment는 Pod의 관리를 담당하는 Kubernetes 리소스
+
+apiVersion: apps/v1 #  Kubernetes의 apps/v1 API 버전을 사용
+kind: Deployment # 이 오브젝트의 종류는 Deployment
+metadata: # Deployment의 메타데이터를 정의
   name: myapp
-spec:
-  selector:
+spec: # Deployment의 구성을 정의
+  selector: # Pod를 선택하기 위한 라벨 셀렉터
     matchLabels:
-      app: myapp
-  replicas: 2
-  template:
+      app: myapp # "app" 라벨이 "myapp"인 Pod들을 선택
+  replicas: 2 # ReplicaSet을 통해 관리될 Pod의 복제본 수입니다. 여기서는 2개의 복제본을 가지도록 설정
+  template: # 새로운 Pod를 생성할 때 사용될 템플릿을 정의
     metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-        - name: myapp
-          image: swordbill/todo-app:build-24
+      labels: # 라벨 설정, "myapp"으로 라벨 설정
+        app: myapp 
+    spec: # Pod 스펙을 정의
+      containers: # Pod 내에 포함될 컨테이너들을 정의
+        - name: myapp # 컨테이너 이름
+          image: swordbill/todo-app:build-24 # 사용할 컨테이너 이미지를 지정
           ports:
             - containerPort: 80
