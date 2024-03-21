@@ -1,34 +1,38 @@
 ## argoCD를 사용하여 Kubernetes 클러스터에 애플리케이션을 배포하기 위한 리소스 정의
 
 # apiVersion 및 kind는 애플리케이션을 정의하는 리소스
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: argoproj.io/v1alpha1 # Argo 프로젝트에서 정의한 커스텀 리소스 : argoproj.io / v1alpha1은 초기 개발 단계의 버전을 나타냄
+kind: Application # 이 매니페스트가 정의하는 Kubernetes 리소스의 종류 / ArgoCD를 사용하여 K8S 클러스터에 애플리케이션을 배포하기 때문에 Application으로 지정
 
-# metadata : 위 애플리케이션의 메타 데이터를 정의, 여기는 애플리케이션의 이름과 네임스페이스를 지정
+# metadata는 위 애플리케이션의 메타 데이터를 정의, 메타데이터는 리소스를 식별하고 구성하는 데 사용되며, Kubernetes 클러스터에서 리소스를 식별하는 데 중요한 역할을 함
+# 아래 내용에는 사용할 이름과 네임스페이스를 지정
 metadata:
   name: todo-app-argo
   namespace: argocd
 
-# spec : 애플리케이션의 구성을 정의, project는 애플리케이션이 속하는 argoCD 프로젝트를 지정
+# spec은 애플리케이션의 구성을 정의
+# project는 애플리케이션이 속하는 argoCD 프로젝트를 지정, 처음 설정한 기본 프로젝트를 default로 설정
 spec:
-  project: default
+  project: default 
 
 # source : 애플리케이션의 소스 코드가 위치한 Git 리포리토리 정보를 정의
-# 리포지토리의 URL 및 브랜치의 HEAD를 의미
   source:
-    repoURL: https://github.com/AnkitJodhani/kube_manifest-4thWeekOfCloudOps.git
-    targetRevision: HEAD
-    path: menifest
+    repoURL: https://github.com/AnkitJodhani/kube_manifest-4thWeekOfCloudOps.git # 애플리케이션 소스를 가진 레포지토리의 정보를 가져온다
+    targetRevision: HEAD # 애플리케이션 소스 코드의 특정 버전이나 브랜치를 지정, HEAD는 레포지토리의 최신 커밋의 소스코드를 사용한다는 의미
+    path: menifest # 해당 깃 리포지토리에서 menifest 디렉토리에서 애플리케이션의 매니페스트 파일을 찾아 배포
   
-# destination : 애플리케이션을 배포할 대상 Kubernetes 클러스터와 네임스페이스를 지정
+# destination : 애플리케이션을 배포할 대상을 설정
   destination: 
-    server: https://kubernetes.default.svc
-    namespace: myapp
+    server: https://kubernetes.default.svc 
+# Kubernetes 클러스터의 내부 DNS 서비스를 통해 접근 가능한 API 서버의 호스트 이름
+# kubernetes는 Kubernetes API 서버를 가리키고, default는 기본 네임스페이스를 의미, svc는 Kubernetes의 내부 서비스를 가리킴
+# 클러스터 내부의 모든 Pod 및 컨테이너에서 사용할 수 있으며, Kubernetes 클러스터의 API 서버에 연결하기 위한 표준 방법
+    namespace: myapp # 네임스페이스는 myapp
 
 # syncPolicy : 애플리케이션의 동기화 정책 설정, 네임스페이스를 생성하는 옵션이 포함
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
+    syncOptions: # syncOptions는 동기화 옵션을 설정하는 배열
+    - CreateNamespace=true #  ArgoCD가 애플리케이션을 배포할 때 대상 클러스터에 명시된 네임스페이스가 없는 경우 자동으로 해당 네임스페이스를 생성하도록 지정
 
 # automated : 자동화된 동기화 정책을 설정
 # selfHeal : Argo CD는 배포된 애플리케이션의 상태를 주기적으로 모니터링하고, 상태가 변경된 경우에 자동으로 해당 상태를 복구
