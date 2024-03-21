@@ -16,7 +16,7 @@ spec:
 # source : 애플리케이션의 소스 코드가 위치한 Git 리포리토리 정보를 정의
 # 리포지토리의 URL 및 브랜치의 HEAD를 의미
   source:
-    repoURL: https://github.com/ng2cc/kube_manifest-4thWeekOfCloudOps.git
+    repoURL: https://github.com/AnkitJodhani/kube_manifest-4thWeekOfCloudOps.git
     targetRevision: HEAD
     path: menifest
   
