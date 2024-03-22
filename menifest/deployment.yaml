@@ -19,7 +19,6 @@ spec: # Deployment의 구성을 정의
     spec: # myapp의 Pod 생성시 세부 설정
       containers: # Pod 내에 포함될 컨테이너들을 정의
         - name: myapp # 컨테이너 이름
-# 아래 이미지는 GIT 리포지토리에 있는 Todo_application/.circleci/config.yaml 파일에 있는 도커 이미지를 불러옴
-          image: swordbill/todo-app:build-28 
+          image: swordbill/todo-app:build-30
           ports:
             - containerPort: 80
