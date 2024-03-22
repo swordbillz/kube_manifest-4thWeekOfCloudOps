@@ -1,4 +1,4 @@
-## argoCD를 사용하여 Kubernetes 클러스터에 애플리케이션을 배포하기 위한 리소스 정의
+# Argo CD는 GitOps 패턴을 따르는 도구로, Git 리포지토리에 저장된 애플리케이션 소스 코드와 클러스터 상태를 동기화
 
 # apiVersion 및 kind는 애플리케이션을 정의하는 리소스
 apiVersion: argoproj.io/v1alpha1 # Argo 프로젝트에서 정의한 커스텀 리소스 : argoproj.io / v1alpha1은 초기 개발 단계의 버전을 나타냄
@@ -6,6 +6,8 @@ kind: Application # 이 매니페스트가 정의하는 Kubernetes 리소스의 
 
 # metadata는 위 애플리케이션의 메타 데이터를 정의, 메타데이터는 리소스를 식별하고 구성하는 데 사용되며, Kubernetes 클러스터에서 리소스를 식별하는 데 중요한 역할을 함
 # 아래 내용에는 사용할 이름과 네임스페이스를 지정
+# Argo CD 대시보드나 CLI를 통해 해당 애플리케이션의 상태와 구성을 확인
+metadata:
 metadata:
   name: todo-app-argo
   namespace: argocd
