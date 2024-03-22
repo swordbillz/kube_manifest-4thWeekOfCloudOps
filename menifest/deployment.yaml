@@ -17,6 +17,6 @@ spec: # Deployment의 구성을 정의
     spec: # Pod 스펙을 정의
       containers: # Pod 내에 포함될 컨테이너들을 정의
         - name: myapp # 컨테이너 이름
-          image: swordbill/todo-app:build-28
+          image: swordbill/todo-app:build-30
           ports:
             - containerPort: 80
