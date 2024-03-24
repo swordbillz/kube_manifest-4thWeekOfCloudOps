@@ -14,8 +14,8 @@ metadata:
 spec: # Pod를 선택하기 위한 라벨 셀렉터
   selector: 
     matchLabels:
-# 자원 요구 사항 등에 따라 레플리카의 수를 정해야함. 로드밸런싱을 통한 트래픽 분산을 위해 2개로 지정    
       app: myapp 
+# 자원 요구 사항 등에 따라 레플리카의 수를 정해야함. 로드밸런싱을 통한 트래픽 분산을 위해 2개로 지정    
   replicas: 2
   revisionHistoryLimit: 3
 # 새로운 Pod를 생성할 때 사용될 템플릿을 정의
