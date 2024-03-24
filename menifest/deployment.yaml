@@ -26,7 +26,6 @@ spec: # Pod를 선택하기 위한 라벨 셀렉터
     spec: # myapp의 Pod 생성시 세부 설정
       containers: # Pod 내에 포함될 컨테이너들을 정의
         - name: myapp # 컨테이너 이름
-
 # CircleCI에서 빌드된 Docker 이미지를 사용하여 애플리케이션을 배포
 # build-##은 해당 이미지의 빌드 버전을 가리킵니다.
           image: swordbill/todo-app:build-38 # 사용할 컨테이너 이미지를 지정
