@@ -21,5 +21,6 @@ spec: # Service의 세부 설정
   - port: 80
     protocol: TCP
     targetPort: 80
+# test
   
 
