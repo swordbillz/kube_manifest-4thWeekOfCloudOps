@@ -49,6 +49,7 @@ kind: Service
 metadata:
   name: nginx-to-tomcat
 spec:
+  type: LoadBalancer
   selector:
     app: nginx # nginx가 포함된 Pod 선택
   ports:
