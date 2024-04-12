@@ -1,25 +1,69 @@
-# Kubernetes의 Service 오브젝트를 정의
-# 로드밸런서 설정으로 argoCD와 EKS 클러스터간의 연결을 위해 설정
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: swordbill/nginx:1.18
+          ports:
+            - containerPort: 80
+      nodeSelector:
+        node-type: web
 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - name: tomcat
+          image: swordbill/tomcat:9.0.87
+          ports:
+            - containerPort: 8080
+      nodeSelector:
+        node-type: was
+
+---
 apiVersion: v1
-kind: Service # Service 필드는 네트워크 서비스를 노출하는 데 사용됩니다.
-# 이를 통해 클러스터 내에서 서로 다른 Pod 간의 통신을 쉽게 할 수 있음.
-# 외부 클라이언트가 서비스에 접근할 수 있도록 할 수 있습니다.
-
-metadata: # Service 필드에 대한 부가정보를 포함하는 객체
-  name: myapp-service
-spec: # Service의 세부 설정
-  selector: # 일반적으로 라벨 셀렉터를 사용하여 특정 Pod 집합을 타겟팅하고
-            # 서비스가 노출하는 포트 및 프로토콜을 지정합니다. 
-            # 이를 통해 클러스터 내의 다른 애플리케이션 및 서비스가 서로 통신이 가능하게 됩니다.
-    app: myapp # myapp이라는 라벨이 붙은 app을 셀렉팅
-
-  type: LoadBalancer # type은 Service의 유형을 정의합니다. 
-  # 이 설정으로 Service는 클러스터 외부에서 접근할 수 있는 로드 밸런서를 자동으로 생성하고
-  # 해당 로드 밸런서를 통해 80번 포트를 통한 내부의 Pod들로 트래픽을 전달
+kind: Service
+metadata:
+  name: nginx-to-tomcat
+spec:
+  selector:
+    app: nginx # nginx가 포함된 Pod 선택
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  
-
+    - protocol: TCP
+      port: 80 # nginx가 사용하는 포트
+      targetPort: 80 # nginx Pod의 포트
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat
+spec:
+  selector:
+    app: tomcat # tomcat이 포함된 Pod 선택
+  ports:
+    - protocol: TCP
+      port: 8080 # tomcat이 사용하는 포트
+      targetPort: 8080 # tomcat Pod의 포트

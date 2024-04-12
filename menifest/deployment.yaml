@@ -1,33 +1,46 @@
-# Kubernetes의 Deployment 오브젝트를 정의
-# Deployment는 Pod의 관리를 담당하는 Kubernetes 리소스
-
-# apiVersion: 일반적으로 그룹/버전의 형식, 그룹 : apps, 버전 : v1으로 설정
-# apps 그룹은 ReplicaSet, Deployment, StatefulSet 등과 같은 애플리케이션 관리에 관련된 리소스를 포함
-
+# nginx Deployment 정의
 apiVersion: apps/v1
-# circleci에서 만들어진 도커이미지를 가져와 eks 클러스터에 배포하는 과정이 필요하기 때문에 deployment의 필드를 사용
-kind: Deployment 
-
-# metadata: Deployment 리소스에 대한 부가정보를 포함하는 객체, Deployment의 구성을 정의
-metadata: 
-  name: myapp
-spec: # Pod를 선택하기 위한 라벨 셀렉터
-  selector: 
-    matchLabels:
-      app: myapp 
-# 자원 요구 사항 등에 따라 레플리카의 수를 정해야함. 로드밸런싱을 통한 트래픽 분산을 위해 2개로 지정    
+kind: Deployment
+metadata:
+  name: nginx
+spec:
   replicas: 2
-  revisionHistoryLimit: 3
-# 새로운 Pod를 생성할 때 사용될 템플릿을 정의
-  template: 
+  selector:
+    matchLabels:
+      app: nginx
+  template:
     metadata:
-      labels: 
-        app: myapp 
-    spec: # myapp의 Pod 생성시 세부 설정
-      containers: # Pod 내에 포함될 컨테이너들을 정의
-        - name: myapp # 컨테이너 이름
-# CircleCI에서 빌드된 Docker 이미지를 사용하여 애플리케이션을 배포
-# build-##은 해당 이미지의 빌드 버전을 가리킵니다.
-          image: swordbill/todo-app:build-38 # 사용할 컨테이너 이미지를 지정
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: swordbill/nginx:1.18
           ports:
             - containerPort: 80
+      nodeSelector: # 노드 유형 지정
+        node-type: web
+
+---
+# tomcat Deployment 정의
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - name: tomcat
+          image: swordbill/tomcat:9.0.87
+          ports:
+            - containerPort: 8080
+      nodeSelector: # 노드 유형 지정
+        node-type: was
