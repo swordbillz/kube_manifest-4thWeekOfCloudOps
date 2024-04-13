@@ -21,8 +21,7 @@ spec:
             - containerPort: 80
       nodeSelector:
         node-type: web
-  minReadySeconds: 30
-  revisionHistoryLimit: 3
+  minReadySeconds: 10
   strategy:
     canary:
       maxSurge: "25%"
@@ -39,6 +38,7 @@ metadata:
   namespace: tomcat
 spec:
   replicas: 5
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: tomcat
@@ -54,8 +54,7 @@ spec:
             - containerPort: 8080
       nodeSelector:
         node-type: was
-  minReadySeconds: 30
-  revisionHistoryLimit: 3
+  minReadySeconds: 10
   strategy:
     canary:
       maxSurge: "25%"
