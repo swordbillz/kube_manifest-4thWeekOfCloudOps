@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: nginx_v2
+  name: nginx
   namespace: nginx
 spec:
   replicas: 8
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:v2
+          image: swordbill/nginx:1.18
           ports:
             - containerPort: 80
       nodeSelector:
@@ -35,7 +35,7 @@ metadata:
   name: tomcat
   namespace: tomcat
 spec:
-  replicas: 8
+  replicas: 5
   selector:
     matchLabels:
       app: tomcat
