@@ -1,6 +1,5 @@
-apiVersion: argoproj.io/v1alpha1 # apps/v1 대신 argoproj.io/v1alpha1를 사용한다.
-kind: Rollout # Deployment 대신 Rollout을 사용한다.
-# ==== 이 아래의 내용은 기존 Deployment와 동일하게 작성한다. ====
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: nginx_v2
   namespace: nginx
@@ -15,23 +14,21 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: swordbill/nginx:v2
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: swordbill/nginx:v2
+          ports:
+            - containerPort: 80
       nodeSelector:
         node-type: web
   minReadySeconds: 30
   revisionHistoryLimit: 3
-# ==== 이 위의 내용은 기존 Deployment와 동일하게 작성한다. ====
   strategy:
-    canary: # 카나리아 전략에 구성 가능한 옵션을 제공하는 데 사용되는 새로운 필드
+    canary:
       steps:
-      - setWeight: 20 # 카나리아로 전송해야하는 트래픽의 백분율.
-      - pause: {} # 롤아웃을 일시 중시하도록 지시한다. 
-# pause 구조체 내에 duration 필드가 설정되어 있으면 duration 필드의 값만큼 기다린 후 롤아웃을 진행한다.
-# 그렇지 않으면, 일시 중지 조건이 제거될 때 까지 롤아웃이 무기한 대기한다.
-# tomcat Deployment 정의
+        - setWeight: 20
+        - pause: {}
+
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -52,13 +49,12 @@ spec:
           image: swordbill/tomcat:9.0.87
           ports:
             - containerPort: 8080
-      nodeSelector: # 노드 유형 지정
+      nodeSelector:
         node-type: was
   minReadySeconds: 30
   revisionHistoryLimit: 3
-# ==== 이 위의 내용은 기존 Deployment와 동일하게 작성한다. ====
   strategy:
-    canary: # 카나리아 전략에 구성 가능한 옵션을 제공하는 데 사용되는 새로운 필드
+    canary:
       steps:
-      - setWeight: 20 # 카나리아로 전송해야하는 트래픽의 백분율.
-      - pause: {}
+        - setWeight: 20
+        - pause: {}
