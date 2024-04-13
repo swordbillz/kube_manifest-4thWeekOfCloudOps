@@ -4,7 +4,7 @@ metadata:
   name: nginx_v2
   namespace: nginx
 spec:
-  replicas: 8
+  replicas: 3
   selector:
     matchLabels:
       app: nginx
@@ -15,13 +15,13 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:v2
+          image: swordbill/nginx:1.18
           ports:
             - containerPort: 80
       nodeSelector:
         node-type: web
   minReadySeconds: 30
-  revisionHistoryLimit: 3
+  revisionHistoryLimit: 2
   strategy:
     canary:
       steps:
@@ -35,7 +35,7 @@ metadata:
   name: tomcat
   namespace: tomcat
 spec:
-  replicas: 8
+  replicas: 3
   selector:
     matchLabels:
       app: tomcat
@@ -52,7 +52,7 @@ spec:
       nodeSelector:
         node-type: was
   minReadySeconds: 30
-  revisionHistoryLimit: 3
+  revisionHistoryLimit: 2
   strategy:
     canary:
       steps:
