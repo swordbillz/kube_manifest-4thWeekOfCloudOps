@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:1.18
+          image: swordbill/nginx:v2
           ports:
             - containerPort: 80
       nodeSelector:
