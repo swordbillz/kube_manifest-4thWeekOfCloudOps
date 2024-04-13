@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: canary-Rollout
+kind: Rollout
 metadata:
   name: nginx
   namespace: nginx
@@ -33,7 +33,7 @@ spec:
 
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: canary-Rollout
+kind: Rollout
 metadata:
   name: tomcat
   namespace: tomcat
