@@ -8,7 +8,7 @@ apiVersion:
 kind: Application
 metadata:
   name: web-was-app
-  namespace: argocd
+  namespace: nginx
 # spec은 애플리케이션의 구성을 정의
 # project는 애플리케이션이 속하는 argoCD 프로젝트를 지정, 처음 설정한 기본 프로젝트를 default로 설정
 spec:
@@ -25,7 +25,7 @@ spec:
   # destination : 애플리케이션을 배포할 대상을 설정
   destination:
     server: https://kubernetes.default.svc
-    namespace: argoCD
+    namespace: nginx
   # syncPolicy : 애플리케이션의 동기화 정책 설정 / syncOptions는 동기화 옵션을 설정하는 배열
   syncPolicy:
     syncOptions:
