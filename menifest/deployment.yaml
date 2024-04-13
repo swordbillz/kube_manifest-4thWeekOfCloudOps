@@ -1,11 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: nginx
+  name: nginx_v2
   namespace: nginx
 spec:
-  replicas: 5
-  revisionHistoryLimit: 2
+  replicas: 8
   selector:
     matchLabels:
       app: nginx
@@ -16,18 +15,17 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:1.18
+          image: swordbill/nginx:v2
           ports:
             - containerPort: 80
       nodeSelector:
         node-type: web
-  minReadySeconds: 10
+  minReadySeconds: 30
+  revisionHistoryLimit: 3
   strategy:
     canary:
-      maxSurge: "25%"
-      maxUnavailable: 0
       steps:
-        - setWeight: 25
+        - setWeight: 20
         - pause: {}
 
 ---
@@ -37,8 +35,7 @@ metadata:
   name: tomcat
   namespace: tomcat
 spec:
-  replicas: 5
-  revisionHistoryLimit: 2
+  replicas: 8
   selector:
     matchLabels:
       app: tomcat
@@ -54,11 +51,10 @@ spec:
             - containerPort: 8080
       nodeSelector:
         node-type: was
-  minReadySeconds: 10
+  minReadySeconds: 30
+  revisionHistoryLimit: 3
   strategy:
     canary:
-      maxSurge: "25%"
-      maxUnavailable: 0
       steps:
-        - setWeight: 25
+        - setWeight: 20
         - pause: {}
