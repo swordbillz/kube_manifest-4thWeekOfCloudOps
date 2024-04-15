@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
@@ -29,7 +29,7 @@ spec:
   #       - pause: {}
 
 ---
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tomcat
