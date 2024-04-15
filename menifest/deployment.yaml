@@ -1,60 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
-  namespace: nginx
+  name: myapp
 spec:
-  replicas: 5
   selector:
     matchLabels:
-      app: nginx
+      app: myapp
+  replicas: 2
   template:
     metadata:
       labels:
-        app: nginx
+        app: myapp
     spec:
       containers:
-        - name: nginx
-          image: swordbill/nginx:1.18
+        - name: myapp
+          image: ankitjodhani/todo-app:build-6
           ports:
             - containerPort: 80
-      nodeSelector:
-        node-type: web
-  # minReadySeconds: 30
-  # revisionHistoryLimit: 2
-  # strategy:
-  #   canary:
-  #     steps:
-  #       - setWeight: 20
-  #       - pause: {}
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: tomcat
-  namespace: tomcat
-spec:
-  replicas: 5
-  selector:
-    matchLabels:
-      app: tomcat
-  template:
-    metadata:
-      labels:
-        app: tomcat
-    spec:
-      containers:
-        - name: tomcat
-          image: swordbill/tomcat:9.0.87
-          ports:
-            - containerPort: 8080
-      nodeSelector:
-        node-type: was
-  # minReadySeconds: 30
-  # revisionHistoryLimit: 2
-  # strategy:
-  #   canary:
-  #     steps:
-  #       - setWeight: 20
-  #       - pause: {}

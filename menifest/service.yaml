@@ -1,25 +1,13 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-to-tomcat
+  name: myapp-service
 spec:
+  selector:
+    app: myapp
+
   type: LoadBalancer
-  selector:
-    app: nginx # nginx가 포함된 Pod 선택
   ports:
-    - protocol: TCP
-      port: 80 # nginx가 사용하는 포트
-      targetPort: 80 # nginx Pod의 포트
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: tomcat
-spec:
-  selector:
-    app: tomcat # tomcat이 포함된 Pod 선택
-  ports:
-    - protocol: TCP
-      port: 8080 # tomcat이 사용하는 포트
-      targetPort: 8080 # tomcat Pod의 포트
+    - port: 80
+      protocol: TCP
+      targetPort: 80
