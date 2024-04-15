@@ -8,6 +8,20 @@ spec:
 
   type: LoadBalancer
   ports:
-    - port: 80
+    - port: 8080
       protocol: TCP
-      targetPort: 80
+      targetPort: 8080
+
+
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
