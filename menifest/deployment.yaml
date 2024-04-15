@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+kind: Deployment
 metadata:
   name: nginx
   namespace: nginx
@@ -20,17 +20,17 @@ spec:
             - containerPort: 80
       nodeSelector:
         node-type: web
-  minReadySeconds: 30
-  revisionHistoryLimit: 2
-  strategy:
-    canary:
-      steps:
-        - setWeight: 20
-        - pause: {}
+  # minReadySeconds: 30
+  # revisionHistoryLimit: 2
+  # strategy:
+  #   canary:
+  #     steps:
+  #       - setWeight: 20
+  #       - pause: {}
 
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+kind: Deployment
 metadata:
   name: tomcat
   namespace: tomcat
@@ -51,10 +51,10 @@ spec:
             - containerPort: 8080
       nodeSelector:
         node-type: was
-  minReadySeconds: 30
-  revisionHistoryLimit: 2
-  strategy:
-    canary:
-      steps:
-        - setWeight: 20
-        - pause: {}
+  # minReadySeconds: 30
+  # revisionHistoryLimit: 2
+  # strategy:
+  #   canary:
+  #     steps:
+  #       - setWeight: 20
+  #       - pause: {}
