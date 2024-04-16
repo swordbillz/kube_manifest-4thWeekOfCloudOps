@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: canary
     spec:
       containers:
         - name: nginx
@@ -41,7 +41,7 @@ spec:
   template:
     metadata:
       labels:
-        app: tomcat
+        app: canary
     spec:
       containers:
         - name: tomcat
