@@ -3,7 +3,7 @@ kind: Rollout # Rollout으로 생성
 metadata:
   name: canary-rollout
 spec:
-  replicas: 8
+  replicas: 3
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -31,9 +31,9 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout # Rollout으로 생성
 metadata:
-  name: canary-rollout
+  name: canary-rollout-2
 spec:
-  replicas: 8
+  replicas: 3
   revisionHistoryLimit: 2
   selector:
     matchLabels:
