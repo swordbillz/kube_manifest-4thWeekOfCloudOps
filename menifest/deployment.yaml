@@ -1,39 +1,61 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout # Rollout으로 생성
 metadata:
-  name: myapp-nginx
+  name: canary-rollout
 spec:
+  replicas: 8
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: nginx
-  replicas: 8
+      app: canary
   template:
     metadata:
       labels:
-        app: nginx
+        app: canary
     spec:
       containers:
         - name: nginx
           image: swordbill/nginx:1.18
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
+  # 이 부분에서 카나리로 지정
+  strategy:
+    canary:
+      maxSurge: "25%" # canary 배포로 생성할 pod의 비율
+      maxUnavailable: 0 # 업데이트 될 때 사용할 수 없는 pod의 최대 수
+      steps:
+        - setWeight: 25 # 카나리로 배포된 서버로 전송해야될 트래픽 비율
+        - pause: {} # AutoPromotion Time (하단 설명 참조)
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout # Rollout으로 생성
 metadata:
-  name: myapp-tomcat
+  name: canary-rollout
 spec:
+  replicas: 8
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: tomcat
-  replicas: 8
+      app: canary
   template:
     metadata:
       labels:
-        app: tomcat
+        app: canary
     spec:
       containers:
         - name: tomcat
           image: swordbill/tomcat:9.0.87
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+  # 이 부분에서 카나리로 지정
+  strategy:
+    canary:
+      maxSurge: "25%" # canary 배포로 생성할 pod의 비율
+      maxUnavailable: 0 # 업데이트 될 때 사용할 수 없는 pod의 최대 수
+      steps:
+        - setWeight: 25 # 카나리로 배포된 서버로 전송해야될 트래픽 비율
+        - pause: {} # AutoPromotion Time (하단 설명 참조)
+---
+
