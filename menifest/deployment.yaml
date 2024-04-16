@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 8
+  replicas: 3
   template:
     metadata:
       labels:
@@ -26,7 +26,7 @@ spec:
   selector:
     matchLabels:
       app: tomcat
-  replicas: 8
+  replicas: 3
   template:
     metadata:
       labels:
