@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: nginx
 spec:
-  replicas: 5
+  replicas: 8
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:1.18
+          image: swordbill/nginx:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 80
