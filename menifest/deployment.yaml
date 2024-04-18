@@ -1,12 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: myapp-nginx
+  name: nginx
 spec:
+  replicas: 6
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: nginx
-  replicas: 4
   template:
     metadata:
       labels:
@@ -15,18 +16,27 @@ spec:
       containers:
         - name: nginx
           image: swordbill/nginx:1.18
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
+  strategy:
+    canary:
+      maxSurge: "25%"
+      maxUnavailable: 0
+      steps:
+        - setWeight: 25
+        - pause: {}
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: myapp-tomcat
+  name: tomcat
 spec:
+  replicas: 6
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: tomcat
-  replicas: 5
   template:
     metadata:
       labels:
@@ -35,5 +45,14 @@ spec:
       containers:
         - name: tomcat
           image: swordbill/tomcat:9.0.87
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+  strategy:
+    canary:
+      maxSurge: "25%"
+      maxUnavailable: 0
+      steps:
+        - setWeight: 25
+        - pause: {}
+---
