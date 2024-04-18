@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: nginx
 spec:
-  replicas: 6
+  replicas: 5
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -32,7 +32,7 @@ kind: Rollout
 metadata:
   name: tomcat
 spec:
-  replicas: 6
+  replicas: 5
   revisionHistoryLimit: 2
   selector:
     matchLabels:
