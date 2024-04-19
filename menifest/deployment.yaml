@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 3
+  replicas: 4
   template:
     metadata:
       labels:
@@ -17,6 +17,13 @@ spec:
           image: swordbill/nginx:1.18
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,7 +33,7 @@ spec:
   selector:
     matchLabels:
       app: tomcat
-  replicas: 3
+  replicas: 4
   template:
     metadata:
       labels:
@@ -37,3 +44,10 @@ spec:
           image: swordbill/tomcat:9.0.87
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"
