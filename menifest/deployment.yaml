@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:1.18
+          image: swordbill/xnginx:v1.0
           ports:
             - containerPort: 80
           resources:
@@ -28,22 +28,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-tomcat
+  name: myapp-nodejs
 spec:
   selector:
     matchLabels:
-      app: tomcat
+      app: nodejs
   replicas: 4
   template:
     metadata:
       labels:
-        app: tomcat
+        app: nodejs
     spec:
       containers:
-        - name: tomcat
-          image: swordbill/tomcat:9.0.87
+        - name: nodejs
+          image: swordbill/nodejs:v1.0
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
           resources:
             requests:
               cpu: "200m"
@@ -68,12 +68,12 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: myapp-tomcat-autoscaler
+  name: myapp-nodejs-autoscaler
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: myapp-tomcat
+    name: myapp-nodejs
   minReplicas: 4
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
