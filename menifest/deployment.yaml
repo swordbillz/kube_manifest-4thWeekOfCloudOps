@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:v3.7
+          image: swordbill/nginx:v3.8
           ports:
             - containerPort: 80
           resources:
