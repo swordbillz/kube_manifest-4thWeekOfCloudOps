@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:v3.6
+          image: swordbill/nginx:v3.7
           ports:
             - containerPort: 80
           resources:
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: swordbill/nodejs:v2.0
+          image: swordbill/nodejs:v2.1
           ports:
             - containerPort: 3000
           resources:
