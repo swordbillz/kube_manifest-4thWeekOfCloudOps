@@ -9,7 +9,7 @@ metadata:
     alb.ingress.kubernetes.io/load-balancer-name: quest-alb
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}, {"HTTPS": 8000}]'
 spec:
-  ingressClassName: alb
+  ingressClassName: alb  # ingressClassName을 "alb"로 수정
   rules:
     - http:
         paths:
