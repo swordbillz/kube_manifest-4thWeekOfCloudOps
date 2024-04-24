@@ -7,6 +7,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/load-balancer-name: myapp-alb
+    alb.ingress.kubernetes.io/cors-enabled: "true"
+    alb.ingress.kubernetes.io/cors-allow-origin: "*"
+    alb.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
+    alb.ingress.kubernetes.io/cors-allow-headers: "origin, content-type, accept"
+    alb.ingress.kubernetes.io/cors-max-age: "3600"
 
 spec:
   ingressClassName: alb
@@ -20,11 +25,3 @@ spec:
                 name: nginx-service
                 port:
                   number: 80
-#           - path: /api
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: nodejs-service
-#                 port:
-#                   number: 3000
-# ###
