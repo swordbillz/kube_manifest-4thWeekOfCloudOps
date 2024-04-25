@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: swordbill/nginx:v5.4
+          image: swordbill/nginx:v5.5
           ports:
             - containerPort: 80
           resources:
@@ -77,4 +77,3 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
-##
