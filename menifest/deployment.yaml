@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: swordbill/nodejs:v3.5
+          image: swordbill/nodejs:v3.6
           ports:
             - containerPort: 3000
           resources:
